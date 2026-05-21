@@ -1,0 +1,23 @@
+# Python Dependencies for Image Search with MySQL
+# Install: pip install -r requirements.txt
+
+# Image processing
+Pillow>=9.0.0
+
+# TensorFlow + Keras + MobileNetV2
+# Requires Python 3.10 or 3.11 on Windows. Python 3.14 is not supported by current TensorFlow wheels.
+tensorflow==2.15.1
+
+# NumPy & SciPy cho vector operations
+numpy>=1.20.0
+scipy>=1.7.0
+
+# MySQL Database
+mysql-connector-python>=8.0.0
+
+# API & Data
+requests>=2.28.0
+
+# Environment variables
+python-dotenv>=0.19.0
+

@@ -1,10 +1,27 @@
 const db = require("../../config/db");
-const { get } = require("../../routes/auth");
+
+const allowedStatuses = ["pending", "accepted", "shipped", "completed", "cancelled"];
 
 const OrderController = {
   getAllOrders: (req, res) => {
-    const q = "SELECT * FROM orders";
+    const q = `
+      SELECT
+        o.id,
+        o.user_id,
+        o.status,
+        o.total_price,
+        o.created_at,
+        u.name AS customer_name,
+        u.email AS customer_email,
+        COUNT(oi.id) AS item_count
+      FROM orders o
+      LEFT JOIN users u ON u.id = o.user_id
+      LEFT JOIN order_items oi ON oi.order_id = o.id
+      GROUP BY o.id, o.user_id, o.status, o.total_price, o.created_at, u.name, u.email
+      ORDER BY o.created_at ASC
+    `;
     db.query(q, (err, data) => {
+      if (err) return res.status(500).json(err);
       return res.json(data);
     });
   },
@@ -21,6 +38,7 @@ const OrderController = {
     u.email AS customer_email,
     oi.product_id,
     p.name AS product_name,
+    p.image AS product_image,
     oi.quantity,
     oi.price,
     (oi.quantity * oi.price) AS subtotal
@@ -56,10 +74,36 @@ const OrderController = {
             quantity: r.quantity,
             price: r.price,
             subtotal: r.subtotal,
+            image: r.product_image,
           })),
       };
 
       return res.status(200).json(order);
+    });
+  },
+  updateOrderStatus: (req, res) => {
+    const orderId = req.params.id;
+    const { status } = req.body;
+
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({
+        message: "Invalid order status",
+        allowedStatuses,
+      });
+    }
+
+    const q = "UPDATE orders SET status = ? WHERE id = ?";
+    db.query(q, [status, orderId], (err, result) => {
+      if (err) return res.status(500).json(err);
+      if (!result.affectedRows) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+      return res.json({
+        message: "Order status updated successfully",
+        order_id: Number(orderId),
+        status,
+      });
     });
   },
   deleteOrder: (req, res) => {

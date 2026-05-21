@@ -1,0 +1,164 @@
+.image-search-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-search-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+/* Preview Section */
+.preview-section {
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.btn-clear {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-clear:hover {
+  background: rgba(255, 0, 0, 1);
+}
+
+.btn-clear:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Drop Zone */
+.drop-zone {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  transition: all 0.3s;
+  background: white;
+}
+
+.drop-zone.active {
+  border-color: #4CAF50;
+  background: #f0f8f0;
+}
+
+.drop-zone p {
+  margin: 10px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.divider {
+  color: #999;
+  margin: 15px 0;
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex: 1;
+  min-width: 150px;
+}
+
+.btn-file {
+  background: #2196F3;
+  color: white;
+}
+
+.btn-file:hover:not(:disabled) {
+  background: #1976D2;
+  transform: translateY(-2px);
+}
+
+.btn-camera {
+  background: #FF9800;
+  color: white;
+}
+
+.btn-camera:hover:not(:disabled) {
+  background: #F57C00;
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading */
+.loading {
+  margin-top: 15px;
+  color: #4CAF50;
+  font-weight: 500;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .image-search-container {
+    padding: 15px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    min-width: 100%;
+  }
+
+  .drop-zone {
+    padding: 30px 15px;
+  }
+}

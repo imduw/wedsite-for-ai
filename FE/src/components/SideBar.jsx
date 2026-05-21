@@ -14,6 +14,7 @@ export default function SideBar({ user }) {
   const menuItems = [
     { label: 'Tổng quan', icon: '📊', href: '/admin/dashboard', id: 'dashboard' },
     { label: 'Đơn hàng', icon: '📦', href: '/admin/orders', id: 'orders' },
+    { label: 'Danh mục', icon: '📋', href: '/admin/categories', id: 'categories' },
     { label: 'Sản phẩm', icon: '🛍️', href: '/admin/products', id: 'products' },
     { label: 'Khách hàng', icon: '👥', href: '/admin/customers', id: 'customers' },
     { label: 'Báo cáo', icon: '📈', href: '/admin/reports', id: 'reports' },

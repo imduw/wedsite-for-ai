@@ -8,8 +8,15 @@ import AdminLayout from "./layouts/AdminLayout"
 
 import ProtectedRoute from "./components/ProtectedRoute"
 import Dashboard from "./pages/admin/Dashboard"
+import ManageOrder from "./pages/admin/ManageOrder"
+import ManageUser from "./pages/admin/ManageUser"
 import Home from "./pages/Home"
 import Product from "./pages/admin/ManageProduct"
+import ProductDetail from "./pages/user/ProductDetail"
+import Categories from "./pages/admin/ManageCategory"
+import Products from "./pages/user/Products"
+import SearchResults from "./pages/user/SearchResults"
+import UserOrders from "./pages/user/UserOders";
 function App() {
   const navigate = useNavigate()
 
@@ -37,9 +44,11 @@ function App() {
       {/* USER */}
       <Route element={<UserLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-
-
+        <Route path="/products" element={<Products />} />
+        <Route path="/search" element={<SearchResults />} />
+        <Route path="user/cart" element={<Cart />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="user/orders" element={<UserOrders />} />
       </Route>
 
       {/* ADMIN */}
@@ -51,8 +60,11 @@ function App() {
           </ProtectedRoute>
         }
       >
+        <Route path="orders" element={<ManageOrder />} />
+        <Route path="customers" element={<ManageUser />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="products" element={<Product />} />
+        <Route path="categories" element={<Categories />} />
       </Route>
     </Routes>
   )

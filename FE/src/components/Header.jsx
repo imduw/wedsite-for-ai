@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Header() {
   const [search, setSearch] = useState('')
@@ -27,6 +27,15 @@ function Header() {
     navigate('/')
   }
 
+  const handleSearchSubmit = (event) => {
+    event.preventDefault()
+    const term = search.trim()
+
+    if (!term) return
+    navigate(`/search?name=${encodeURIComponent(term)}`)
+    setSearch('')
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-slate-900 text-white shadow-lg">
       <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 md:px-6">
@@ -34,22 +43,26 @@ function Header() {
           Shop<span className="text-amber-400">Now</span>
         </h1>
 
-        <div className="flex w-full items-center gap-2 md:w-auto">
-          <div className="flex flex-1 overflow-hidden rounded-lg bg-white md:min-w-[320px]">
+        <div className="flex w-full flex-wrap items-center gap-2 md:w-auto">
+          <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
             <input
               type="text"
-              placeholder="Tìm sản phẩm..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-3 py-2 text-sm text-slate-800 outline-none"
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Tìm sản phẩm..."
+              className="w-full min-w-0 rounded-lg border border-white/15 bg-slate-800 px-4 py-2 text-sm text-white placeholder:text-slate-400 outline-none focus:border-amber-400 md:w-72"
             />
-            <button className="bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-amber-300">
+            <button
+              type="submit"
+              className="shrink-0 rounded-lg bg-amber-400 px-4 py-2 text-sm font-bold text-slate-900 hover:bg-amber-300"
+            >
               Tìm
             </button>
-          </div>
+          </form>
 
           {!user ? (
             <button
+              type="button"
               onClick={() => (window.location.href = 'http://localhost:3000/auth/google')}
               className="shrink-0 rounded-lg bg-white px-4 py-2 text-sm font-bold text-slate-900 hover:bg-slate-100"
             >
@@ -58,6 +71,7 @@ function Header() {
           ) : (
             <div className="relative">
               <button
+                type="button"
                 onClick={() => setShowMenu(!showMenu)}
                 className="flex items-center gap-2 rounded-lg bg-slate-800 px-3 py-2 hover:bg-slate-700"
               >
@@ -75,11 +89,13 @@ function Header() {
                     <p className="text-sm font-semibold">{user.name}</p>
                     <p className="text-xs text-slate-500">{user.email}</p>
                   </div>
-                  <a href="/cart" className="block w-full px-4 py-2 text-left text-sm hover:bg-slate-100">
+                  <a href="/user/cart" className="block w-full px-4 py-2 text-left text-sm hover:bg-slate-100">
                     Xem giỏ hàng
                   </a>
+                  
 
                   <button
+                    type="button"
                     onClick={handleLogout}
                     className="block w-full border-t border-slate-200 px-4 py-2 text-left text-sm text-red-600 hover:bg-slate-100"
                   >
@@ -92,14 +108,13 @@ function Header() {
         </div>
       </div>
 
-      <nav className="border-t border-white/15 border-b border-white/10">
+      <nav className="border-y border-white/10">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6">
           <div className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-200">
-            <a href="/" className="hover:text-amber-300">Trang chủ</a>
-            <a href="#" className="hover:text-amber-300">Sản phẩm</a>
-            <a href="#" className="hover:text-amber-300">Khuyến mãi</a>
+            <Link to="/" className="hover:text-amber-300">Trang chủ</Link>
+            <Link to="/products" className="hover:text-amber-300">Sản phẩm</Link>
             <a href="#" className="hover:text-amber-300">Danh mục</a>
-            <a href="#" className="hover:text-amber-300">Liên hệ</a>
+            <Link to="/user/orders" className="hover:text-amber-300">Đơn hàng của tôi</Link>
           </div>
           
         </div>

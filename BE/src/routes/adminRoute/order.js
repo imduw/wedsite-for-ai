@@ -3,4 +3,5 @@ const OrderController = require("../../controller/adminController/OrderControlle
 const router = express.Router();
 router.get("/", OrderController.getAllOrders);
 router.get("/detail/:id", OrderController.getOrderDetailById);
+router.put("/status/:id", OrderController.updateOrderStatus);
 module.exports = router;

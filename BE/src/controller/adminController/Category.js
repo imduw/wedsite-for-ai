@@ -28,5 +28,22 @@ const CategoryController={
           return res.json("Category has been deleted");
         });
     },
+    updateCategory: (req, res) => {
+        const categoryId = req.params.id;
+        const { name, description } = req.body;
+
+        if (!name || !name.trim()) {
+            return res.status(400).json({ message: "Name is required" });
+        }
+
+        const q = "UPDATE categories SET name = ?, description = ? WHERE id = ?";
+        db.query(q, [name.trim(), description || null, categoryId], (err, result) => {
+            if (err) return res.status(500).json(err);
+            if (!result || result.affectedRows === 0) {
+                return res.status(404).json({ message: "Category not found" });
+            }
+            return res.json({ message: "Category updated", id: categoryId });
+        });
+    },
 }
 module.exports=CategoryController
